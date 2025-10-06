@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class BirdMover : MonoBehaviour
 {
-    [SerializeField] private KeyCode _jumpKey;
     [SerializeField] private Cursor _cursor;
     [SerializeField] private int _jumpForce;
 
@@ -18,11 +17,6 @@ public class BirdMover : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(_jumpKey)) 
-        {
-            Jump();
-        }
-
         LookAt();
     }
 
@@ -32,7 +26,7 @@ public class BirdMover : MonoBehaviour
         transform.right = direction;
     }
 
-    private void Jump() 
+    public void Jump() 
     {
         _rigidbody2D.velocity = new Vector2(0, _jumpForce);
         _cursor.Jump(_jumpForce);

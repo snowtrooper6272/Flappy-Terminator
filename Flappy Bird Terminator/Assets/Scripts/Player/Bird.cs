@@ -2,45 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Shooter), typeof(PlayerHealth))]
+[RequireComponent(typeof(InputReader), typeof(HealthIndicator))]
 public class Bird : MonoBehaviour
 {
-    [SerializeField] private KeyCode _shootKey;
-    [SerializeField] private float _shootDelay;
+    [SerializeField] private Shooter _shooter;
+    [SerializeField] private BirdMover _mover;
 
-    private Shooter _shooter;
-    private PlayerHealth _healthIndicator;
-    private float _currentShootTime;
+    private InputReader _inputReader;
+    private HealthIndicator _healthIndicator;
 
     private void Awake()
     {
-        _shooter = GetComponent<Shooter>();
-        _healthIndicator = GetComponent<PlayerHealth>();
+        _inputReader = GetComponent<InputReader>();
+        _healthIndicator = GetComponent<HealthIndicator>();
     }
 
     private void OnEnable()
     {
         _healthIndicator.Died += Die;
+        _inputReader.Shooted += _shooter.Shoot;
+        _inputReader.Jumped += _mover.Jump;
     }
 
     private void OnDisable()
     {
         _healthIndicator.Died -= Die;
-    }
-
-    private void Update()
-    {
-        if (_currentShootTime >= _shootDelay) 
-        {
-            if (Input.GetKeyDown(_shootKey))
-            {
-                _currentShootTime = 0;
-
-                _shooter.Shoot();
-            }
-        }
-
-        _currentShootTime += Time.deltaTime;
+        _inputReader.Shooted -= _shooter.Shoot;
+        _inputReader.Jumped -= _mover.Jump;
     }
 
     private void Die() 

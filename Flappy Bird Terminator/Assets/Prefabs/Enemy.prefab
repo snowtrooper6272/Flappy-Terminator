@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2922815174322785432}
   - component: {fileID: 1184951773164720074}
-  - component: {fileID: 6650861116070299823}
   - component: {fileID: 2261115849189984603}
   - component: {fileID: 3244743570083636702}
   - component: {fileID: 3807379425064746399}
   - component: {fileID: 7050059401149149696}
   - component: {fileID: 6568997929216115488}
+  - component: {fileID: 5904196545489034998}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -90,19 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6650861116070299823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4931648489976571783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f124bb20546ab9744a24fd8aa3b31f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 1813346658688900281, guid: 36da3ba8c60ee31449b17933414e40ea, type: 3}
 --- !u!114 &2261115849189984603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b338269e24fc884692e8c8a733d6595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 2
+  _startHealth: 2
 --- !u!114 &3244743570083636702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _database: {fileID: 11400000, guid: 929b6dbaecea70d4fb9fc46d85182362, type: 2}
-  _shooter: {fileID: 6650861116070299823}
+  _shooter: {fileID: 5904196545489034998}
+  _mover: {fileID: 3807379425064746399}
   _healthIndicator: {fileID: 2261115849189984603}
 --- !u!114 &3807379425064746399
 MonoBehaviour:
@@ -143,7 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d40c6efddcc81e4bbe1d5e24f319511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
 --- !u!50 &7050059401149149696
 Rigidbody2D:
   serializedVersion: 4
@@ -206,3 +193,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.3742419
+--- !u!114 &5904196545489034998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4931648489976571783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fcd470fb8a4ed49ab9eb321f1cf209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnPrefab: {fileID: 1813346658688900281, guid: 36da3ba8c60ee31449b17933414e40ea, type: 3}
+  _capacity: 4

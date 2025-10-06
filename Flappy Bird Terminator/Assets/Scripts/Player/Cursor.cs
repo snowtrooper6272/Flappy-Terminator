@@ -9,7 +9,7 @@ public class Cursor : MonoBehaviour
     [SerializeField] private float _rotationRatio;
 
     private float _barrierUp = 3f;
-    private float _barrierDown = -2f;
+    private float _barrierDown = -1.7f;
     private float _smoothing = 0.2f;
 
     private float _maxYPosition => _hunted.position.y + _barrierUp;

@@ -3,63 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : SpawnObject<EnemyConfig>
 {
-    [SerializeField] private EnemySO _database;
     [SerializeField] private Shooter _shooter;
+    [SerializeField] private Mover _mover;
     [SerializeField] private HealthIndicator _healthIndicator;
 
-    private float _currentLifeTime;
-    private Coroutine _shooting;
-
-    public event Action<Enemy> Stored;
+    private float _lastShootTime = 0;
 
     private void OnEnable()
     {
-        _healthIndicator.Died += Die;
+        _healthIndicator.Died += LifeEnd;
     }
 
     private void OnDisable()
     {
-        if(_shooting != null)
-            StopCoroutine(_shooting);
-
-        _healthIndicator.Died -= Die;
+        _healthIndicator.Died -= LifeEnd;
     }
 
-    private void Update()
+    private void Start()
     {
-        if (_currentLifeTime >= _database.LifeTime) 
-        {
-            Stored.Invoke(this);
-        }
-
-        _currentLifeTime += Time.deltaTime;
+        StartLife();
     }
 
-    public void Init(Vector3 position) 
+    protected override void LifeUpdate(float currentTime)
     {
-        transform.position = position;
-        _currentLifeTime = 0;
-        _healthIndicator.Init();
-        _shooting = StartCoroutine(Shooting());
-    }
-
-    private IEnumerator Shooting() 
-    {
-        bool isShooting = true;
-        WaitForSeconds delay = new WaitForSeconds(_database.DelayShooting);
-
-        while (isShooting) 
+        if (currentTime - _lastShootTime >= _database.DelayShooting) 
         {
             _shooter.Shoot();
-
-            yield return delay;
+            _lastShootTime = currentTime;
         }
     }
 
-    public void Die() 
+    public override void Init(Vector3 position, Quaternion quaternion, Vector2 direction)
     {
-        Stored.Invoke(this);
+        base.Init(position, quaternion, direction);
+
+        _mover.SetMovement(_database.Speed, direction);
+        _healthIndicator.Init();
     }
 }

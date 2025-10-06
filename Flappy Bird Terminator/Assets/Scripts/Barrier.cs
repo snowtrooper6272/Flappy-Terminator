@@ -7,7 +7,7 @@ public class Barrier : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] private float _delay;
 
-    private PlayerHealth _intruder;
+    private HealthIndicator _intruder;
     private float _currentTime;
 
     private void Start()
@@ -31,7 +31,7 @@ public class Barrier : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerHealth playerHealth))
+        if (collision.gameObject.TryGetComponent(out HealthIndicator playerHealth))
         {
             _intruder = playerHealth;
         }
@@ -39,9 +39,10 @@ public class Barrier : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerHealth playerHealth))
+        if (collision.gameObject.TryGetComponent(out HealthIndicator playerHealth))
         {
             _intruder = null;
+            _currentTime = _delay;
         }
     }
 }
